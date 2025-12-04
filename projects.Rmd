@@ -1,0 +1,20 @@
+---
+title: "My Projects"
+---
+
+## Data Analysis Projects
+
+Below are selected projects that demonstrate my analytical workflow.
+
+### Project 1: Chicago Business Intelligence Report
+**Objective:** Analyze Chicago's active business license data to identify optimal neighborhood characteristics for new retail store placement, balancing marketing opportunity against competition
+
+**Key Steps:** Soured public data via API, performed data quality assessment, conducted descriptive analytics, created professional visualizations, and derived strategic location recommendations.
+
+**Skills:** `ggplot2`, data wrangling, R Markdown reporting.
+
+[View Project Details](project1.html)
+
+---
+
+[← Back to Home](index.html)

@@ -1,0 +1,22 @@
+---
+title: "About Me"
+---
+
+## Background
+I'm a student in the E-Management, developing skills in data-driven decision making.
+
+## Skills
+- **Data Analysis:** Using R for statistical exploration and business insights.
+- **Data Visualization:** Creating charts with `ggplot2` to tell stories with data.
+- **Reproducible Reporting:** Building documents and websites with R Markdown.
+
+## Education
+**Vancouver Island University** - E-Management Program
+
+## Contact
+- Email: [kadenbrowne.77@gmail.com](mailto:your.email@example.com)
+- GitHub: [WarrenBrowne](https://github.com/YourGitHubUsername)
+
+---
+
+[← Back to Home](index.html)

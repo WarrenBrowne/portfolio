@@ -1,0 +1,26 @@
+---
+title: "My Data Portfolio"
+---
+
+## Welcome!
+
+Hi, I'm **Warren Browne**. This is my portfolio of data analysis projects created with R.
+
+### What I Do
+- **Clean** and organize messy data.
+- **Analyze** data to find patterns and answers.
+- **Visualize** results with clear, professional graphs.
+- **Communicate** findings in reports anyone can understand.
+
+### Featured Skills
+*   **Tools:** R, RStudio, ggplot2, R Markdown
+*   **Analysis:** Data Wrangling, Exploratory Analysis, Visualization
+*   **Output:** Interactive Reports, Dashboards, Web Pages (like this one!)
+
+> Use the menu at the top to navigate my portfolio.
+
+---
+
+*This site was built with R Markdown and hosted on GitHub Pages.*
+
+

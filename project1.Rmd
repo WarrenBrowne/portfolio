@@ -1,0 +1,123 @@
+---
+title: "Open Data Network Business Intelligence Report"
+subtitle: "Data-Driven Management Analysis"
+author: "Warren Browne -- 665570743"
+date: "November 1 2025"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+```
+
+# Section 1: Business Problem Definition
+
+A retail chain needs to identify optimal Chicago neighborhoods for new store locations by analyzing business license density to avoid oversaturated markets and target underserved areas. This data shows current business distribution, enabling identification of neighborhoods with balanced competition and customer potential.
+
+# Section 2: Data Source Assessment
+
+## Data Source Documentation
+
+**Direct URL:** https://data.cityofchicago.org/Community-Economic-Development/Business-Licenses-Current-Active/u77p-8jgp  
+**Organization:** City of Chicago Department of Business Affairs & Consumer Protection  
+**Original Purpose:** Regulatory compliance for business licensing and tax collection  
+**Time Period:** Current active licenses, updated daily  
+**Geographic Scope:** All licensed businesses within Chicago city limits  
+**Limitations:** Some geographic fields have 8% missing data; SSA field has 74% missing
+
+## Access Method Implementation
+
+```{r}
+# CSV downloaded from Chicago Data Portal and saved in project directory
+business_data <- read.csv("Business_Licenses_-_Current_Active_20251028.csv")
+```
+
+## Data Quality Assessment
+
+```{r}
+# Required data quality analysis
+dim(business_data)
+str(business_data[,1:8])
+colSums(is.na(business_data))
+(colSums(is.na(business_data)) / nrow(business_data)) * 100
+sapply(business_data[, c("LICENSE.DESCRIPTION", "COMMUNITY.AREA.NAME")], function(x) length(unique(x)))
+
+# Calculate overall data completeness (percentage of non-NA values)
+total_cells <- nrow(business_data) * ncol(business_data)
+non_na_cells <- sum(!is.na(business_data))
+overall_completeness <- (non_na_cells / total_cells) * 100
+overall_completeness
+
+# Check specific key columns for <10% missingness
+key_cols_missing <- (colSums(is.na(business_data[, c("ID", "LICENSE.DESCRIPTION", "BUSINESS.ACTIVITY", "COMMUNITY.AREA.NAME")])) / nrow(business_data)) * 100
+key_cols_missing
+```
+
+The dataset is `r round(overall_completeness, 1)`% complete overall with key business identifiers 100% usable. We trust this official government source used for taxation and regulation. This data supports retail location decisions by revealing neighborhood business density and competition levels.
+
+# Section 3: Comprehensive Data Analysis
+
+## Descriptive Analytics
+
+```{r}
+# Use aggregate()
+neighborhood_business <- aggregate(list(Count = business_data$ID), 
+                                  by = list(Neighborhood = business_data$COMMUNITY.AREA.NAME), 
+                                  FUN = length)
+
+# Use group_by()  
+license_types <- business_data %>% group_by(LICENSE.DESCRIPTION) %>% summarize(Count = n())
+
+head(neighborhood_business)
+head(license_types)
+```
+
+Aggregate shows neighborhood business counts. Group_by reveals license type distribution. Both help identify market saturation levels and business environment characteristics. 
+
+## Professional Visual Analytics
+
+```{r}
+# Visualization 1: Business by neighborhood
+ggplot(head(neighborhood_business, 10), aes(x = reorder(Neighborhood, Count), y = Count)) +
+  geom_bar(stat = "identity") + coord_flip() +
+  labs(title = "Businesses by Neighborhood", x = "Neighborhood", y = "Count")
+
+# Visualization 2: License types
+ggplot(head(license_types, 8), aes(x = reorder(LICENSE.DESCRIPTION, Count), y = Count)) +
+  geom_bar(stat = "identity") + coord_flip() +
+  labs(title = "Business License Types", x = "License Type", y = "Count")
+
+# Visualization 3: Scatter Plot - Total Businesses vs Restaurants
+restaurant_data <- business_data %>% filter(grepl("Food", BUSINESS.ACTIVITY))
+restaurant_summary <- restaurant_data %>% group_by(COMMUNITY.AREA.NAME) %>% summarize(Restaurants = n())
+
+scatter_data <- neighborhood_business %>%
+  rename(Total_Businesses = Count) %>%
+  left_join(restaurant_summary, by = c("Neighborhood" = "COMMUNITY.AREA.NAME"))
+
+ggplot(scatter_data, aes(x = Total_Businesses, y = Restaurants)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title = "Relationship: Total Businesses vs. Restaurants by Neighborhood",
+       x = "Total Number of Businesses",
+       y = "Number of Restaurants")
+```
+
+Chart 1 shows business density. Chart 2 reveals license distribution. Chart 3 shows the correlation between total businesses and restaurant concentration. All inform location strategy by visualizing market patterns. 
+
+## Pattern Recognition
+
+1. Geographic: Near North Side (4,587 businesses) has 4x more businesses than Ashburn (1,112), indicating significant market density variation.
+2. Category: Limited Business Licenses (15,476) dominate over Retail Food Establishments (3,456), showing small business environment favors new entrants.
+
+# Section 4: Strategic Recommendations
+
+1. Avoid Near North Side and Loop (7,000+ businesses) due to saturation.
+2. Target moderate-density areas like Portage Park (2,100 businesses) for balanced competition.
+3. Leverage small-business friendly environment indicated by Limited License dominance. Data confirms optimal neighborhoods have 1,000-2,000 existing businesses.
+[← Back to Projects](projects.html)

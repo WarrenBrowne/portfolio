@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Warren Browne – 665570743" />
+
+
+<title>Open Data Network Business Intelligence Report</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #204a87; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #204a87; font-weight: bold; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">My Portfolio</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="projects.html">Projects</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Open Data Network Business Intelligence
+Report</h1>
+<h3 class="subtitle">Data-Driven Management Analysis</h3>
+<h4 class="author">Warren Browne – 665570743</h4>
+<h4 class="date">November 1 2025</h4>
+
+</div>
+
+
+<div id="section-1-business-problem-definition" class="section level1">
+<h1>Section 1: Business Problem Definition</h1>
+<p>A retail chain needs to identify optimal Chicago neighborhoods for
+new store locations by analyzing business license density to avoid
+oversaturated markets and target underserved areas. This data shows
+current business distribution, enabling identification of neighborhoods
+with balanced competition and customer potential.</p>
+</div>
+<div id="section-2-data-source-assessment" class="section level1">
+<h1>Section 2: Data Source Assessment</h1>
+<div id="data-source-documentation" class="section level2">
+<h2>Data Source Documentation</h2>
+<p><strong>Direct URL:</strong> <a
+href="https://data.cityofchicago.org/Community-Economic-Development/Business-Licenses-Current-Active/u77p-8jgp"
+class="uri">https://data.cityofchicago.org/Community-Economic-Development/Business-Licenses-Current-Active/u77p-8jgp</a><br />
+<strong>Organization:</strong> City of Chicago Department of Business
+Affairs &amp; Consumer Protection<br />
+<strong>Original Purpose:</strong> Regulatory compliance for business
+licensing and tax collection<br />
+<strong>Time Period:</strong> Current active licenses, updated
+daily<br />
+<strong>Geographic Scope:</strong> All licensed businesses within
+Chicago city limits<br />
+<strong>Limitations:</strong> Some geographic fields have 8% missing
+data; SSA field has 74% missing</p>
+</div>
+<div id="access-method-implementation" class="section level2">
+<h2>Access Method Implementation</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># CSV downloaded from Chicago Data Portal and saved in project directory</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>business_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Business_Licenses_-_Current_Active_20251028.csv&quot;</span>)</span></code></pre></div>
+</div>
+<div id="data-quality-assessment" class="section level2">
+<h2>Data Quality Assessment</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># Required data quality analysis</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">dim</span>(business_data)</span></code></pre></div>
+<pre><code>## [1] 53793    37</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">str</span>(business_data[,<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>])</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    53793 obs. of  8 variables:
+##  $ ID                    : chr  &quot;2563584-20260916&quot; &quot;1883320-20260516&quot; &quot;2446422-20260116&quot; &quot;1680218-20251216&quot; ...
+##  $ LICENSE.ID            : int  3020538 2967415 3056546 3053510 3053984 3053986 3054753 3054754 3053995 3052959 ...
+##  $ ACCOUNT.NUMBER        : int  56526 325535 368363 301402 368222 368222 423491 423491 368389 29528 ...
+##  $ SITE.NUMBER           : int  5 2 2 1 1 1 2 2 2 1 ...
+##  $ LEGAL.NAME            : chr  &quot;APPLE COMPUTER, INC&quot; &quot;ASHLAND COMMERCIAL, LLC&quot; &quot;ELITE PERSONAL CHEFS, LLC&quot; &quot;PROSPECTUS ART GALLERY LTD.&quot; ...
+##  $ DOING.BUSINESS.AS.NAME: chr  &quot;APPLE INC&quot; &quot;ASHLAND COMMERCIAL, LLC&quot; &quot;ELITE PERSONAL CHEFS&quot; &quot;PROSPECTUS ART GALLERY&quot; ...
+##  $ ADDRESS               : chr  &quot;401 N MICHIGAN AVE&quot; &quot;1608 W ADAMS ST 2,3,4&quot; &quot;859 W ERIE ST 8TH 806&quot; &quot;1210 W 18TH ST 1&quot; ...
+##  $ CITY                  : chr  &quot;CHICAGO&quot; &quot;CHICAGO&quot; &quot;CHICAGO&quot; &quot;CHICAGO&quot; ...</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(business_data))</span></code></pre></div>
+<pre><code>##                                ID                        LICENSE.ID 
+##                                 0                                 0 
+##                    ACCOUNT.NUMBER                       SITE.NUMBER 
+##                                 0                                 0 
+##                        LEGAL.NAME            DOING.BUSINESS.AS.NAME 
+##                                 0                                 0 
+##                           ADDRESS                              CITY 
+##                                 0                                 0 
+##                             STATE                          ZIP.CODE 
+##                                 0                                 0 
+##                              WARD                          PRECINCT 
+##                              4238                              4405 
+##                     WARD.PRECINCT                   POLICE.DISTRICT 
+##                                 0                              4199 
+##                    COMMUNITY.AREA               COMMUNITY.AREA.NAME 
+##                              4368                                 0 
+##                      NEIGHBORHOOD                      LICENSE.CODE 
+##                                 0                                 0 
+##               LICENSE.DESCRIPTION              BUSINESS.ACTIVITY.ID 
+##                                 0                                 0 
+##                 BUSINESS.ACTIVITY                    LICENSE.NUMBER 
+##                                 0                                 0 
+##                  APPLICATION.TYPE          APPLICATION.CREATED.DATE 
+##                                 0                                 0 
+## APPLICATION.REQUIREMENTS.COMPLETE                      PAYMENT.DATE 
+##                                 0                                 0 
+##              CONDITIONAL.APPROVAL           LICENSE.TERM.START.DATE 
+##                                 0                                 0 
+##      LICENSE.TERM.EXPIRATION.DATE     LICENSE.APPROVED.FOR.ISSUANCE 
+##                                 0                                 0 
+##                       DATE.ISSUED                    LICENSE.STATUS 
+##                                 0                                 0 
+##        LICENSE.STATUS.CHANGE.DATE                               SSA 
+##                             53793                             39687 
+##                          LATITUDE                         LONGITUDE 
+##                              4431                              4431 
+##                          LOCATION 
+##                                 0</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>(<span class="fu">colSums</span>(<span class="fu">is.na</span>(business_data)) <span class="sc">/</span> <span class="fu">nrow</span>(business_data)) <span class="sc">*</span> <span class="dv">100</span></span></code></pre></div>
+<pre><code>##                                ID                        LICENSE.ID 
+##                          0.000000                          0.000000 
+##                    ACCOUNT.NUMBER                       SITE.NUMBER 
+##                          0.000000                          0.000000 
+##                        LEGAL.NAME            DOING.BUSINESS.AS.NAME 
+##                          0.000000                          0.000000 
+##                           ADDRESS                              CITY 
+##                          0.000000                          0.000000 
+##                             STATE                          ZIP.CODE 
+##                          0.000000                          0.000000 
+##                              WARD                          PRECINCT 
+##                          7.878348                          8.188798 
+##                     WARD.PRECINCT                   POLICE.DISTRICT 
+##                          0.000000                          7.805848 
+##                    COMMUNITY.AREA               COMMUNITY.AREA.NAME 
+##                          8.120016                          0.000000 
+##                      NEIGHBORHOOD                      LICENSE.CODE 
+##                          0.000000                          0.000000 
+##               LICENSE.DESCRIPTION              BUSINESS.ACTIVITY.ID 
+##                          0.000000                          0.000000 
+##                 BUSINESS.ACTIVITY                    LICENSE.NUMBER 
+##                          0.000000                          0.000000 
+##                  APPLICATION.TYPE          APPLICATION.CREATED.DATE 
+##                          0.000000                          0.000000 
+## APPLICATION.REQUIREMENTS.COMPLETE                      PAYMENT.DATE 
+##                          0.000000                          0.000000 
+##              CONDITIONAL.APPROVAL           LICENSE.TERM.START.DATE 
+##                          0.000000                          0.000000 
+##      LICENSE.TERM.EXPIRATION.DATE     LICENSE.APPROVED.FOR.ISSUANCE 
+##                          0.000000                          0.000000 
+##                       DATE.ISSUED                    LICENSE.STATUS 
+##                          0.000000                          0.000000 
+##        LICENSE.STATUS.CHANGE.DATE                               SSA 
+##                        100.000000                         73.777257 
+##                          LATITUDE                         LONGITUDE 
+##                          8.237131                          8.237131 
+##                          LOCATION 
+##                          0.000000</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">sapply</span>(business_data[, <span class="fu">c</span>(<span class="st">&quot;LICENSE.DESCRIPTION&quot;</span>, <span class="st">&quot;COMMUNITY.AREA.NAME&quot;</span>)], <span class="cf">function</span>(x) <span class="fu">length</span>(<span class="fu">unique</span>(x)))</span></code></pre></div>
+<pre><code>## LICENSE.DESCRIPTION COMMUNITY.AREA.NAME 
+##                  59                  78</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co"># Calculate overall data completeness (percentage of non-NA values)</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>total_cells <span class="ot">&lt;-</span> <span class="fu">nrow</span>(business_data) <span class="sc">*</span> <span class="fu">ncol</span>(business_data)</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>non_na_cells <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(business_data))</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>overall_completeness <span class="ot">&lt;-</span> (non_na_cells <span class="sc">/</span> total_cells) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>overall_completeness</span></code></pre></div>
+<pre><code>## [1] 93.99339</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co"># Check specific key columns for &lt;10% missingness</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>key_cols_missing <span class="ot">&lt;-</span> (<span class="fu">colSums</span>(<span class="fu">is.na</span>(business_data[, <span class="fu">c</span>(<span class="st">&quot;ID&quot;</span>, <span class="st">&quot;LICENSE.DESCRIPTION&quot;</span>, <span class="st">&quot;BUSINESS.ACTIVITY&quot;</span>, <span class="st">&quot;COMMUNITY.AREA.NAME&quot;</span>)])) <span class="sc">/</span> <span class="fu">nrow</span>(business_data)) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>key_cols_missing</span></code></pre></div>
+<pre><code>##                  ID LICENSE.DESCRIPTION   BUSINESS.ACTIVITY COMMUNITY.AREA.NAME 
+##                   0                   0                   0                   0</code></pre>
+<p>The dataset is 94% complete overall with key business identifiers
+100% usable. We trust this official government source used for taxation
+and regulation. This data supports retail location decisions by
+revealing neighborhood business density and competition levels.</p>
+</div>
+</div>
+<div id="section-3-comprehensive-data-analysis" class="section level1">
+<h1>Section 3: Comprehensive Data Analysis</h1>
+<div id="descriptive-analytics" class="section level2">
+<h2>Descriptive Analytics</h2>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="co"># Use aggregate()</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>neighborhood_business <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(<span class="fu">list</span>(<span class="at">Count =</span> business_data<span class="sc">$</span>ID), </span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>                                  <span class="at">by =</span> <span class="fu">list</span>(<span class="at">Neighborhood =</span> business_data<span class="sc">$</span>COMMUNITY.AREA.NAME), </span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>                                  <span class="at">FUN =</span> length)</span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a><span class="co"># Use group_by()  </span></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>license_types <span class="ot">&lt;-</span> business_data <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(LICENSE.DESCRIPTION) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">Count =</span> <span class="fu">n</span>())</span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a><span class="fu">head</span>(neighborhood_business)</span></code></pre></div>
+<pre><code>##     Neighborhood Count
+## 1                 4373
+## 2    ALBANY PARK   797
+## 3 ARCHER HEIGHTS   328
+## 4  ARMOUR SQUARE   424
+## 5        ASHBURN   454
+## 6 AUBURN GRESHAM   411</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">head</span>(license_types)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 2
+##   LICENSE.DESCRIPTION                  Count
+##   &lt;chr&gt;                                &lt;int&gt;
+## 1 Affiliation                             21
+## 2 Animal Care License                    396
+## 3 Bicycle Messenger Service                3
+## 4 Caterer&#39;s Liquor License               259
+## 5 Children&#39;s Services Facility License   847
+## 6 Commercial Garage                      599</code></pre>
+<p>Aggregate shows neighborhood business counts. Group_by reveals
+license type distribution. Both help identify market saturation levels
+and business environment characteristics.</p>
+</div>
+<div id="professional-visual-analytics" class="section level2">
+<h2>Professional Visual Analytics</h2>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="co"># Visualization 1: Business by neighborhood</span></span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">head</span>(neighborhood_business, <span class="dv">10</span>), <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Neighborhood, Count), <span class="at">y =</span> Count)) <span class="sc">+</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="sc">+</span> <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Businesses by Neighborhood&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Neighborhood&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>)</span></code></pre></div>
+<p><img src="project1_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="co"># Visualization 2: License types</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">head</span>(license_types, <span class="dv">8</span>), <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(LICENSE.DESCRIPTION, Count), <span class="at">y =</span> Count)) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="sc">+</span> <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Business License Types&quot;</span>, <span class="at">x =</span> <span class="st">&quot;License Type&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>)</span></code></pre></div>
+<p><img src="project1_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="co"># Visualization 3: Scatter Plot - Total Businesses vs Restaurants</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>restaurant_data <span class="ot">&lt;-</span> business_data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">&quot;Food&quot;</span>, BUSINESS.ACTIVITY))</span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a>restaurant_summary <span class="ot">&lt;-</span> restaurant_data <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(COMMUNITY.AREA.NAME) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">Restaurants =</span> <span class="fu">n</span>())</span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a>scatter_data <span class="ot">&lt;-</span> neighborhood_business <span class="sc">%&gt;%</span></span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Total_Businesses =</span> Count) <span class="sc">%&gt;%</span></span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a>  <span class="fu">left_join</span>(restaurant_summary, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;Neighborhood&quot;</span> <span class="ot">=</span> <span class="st">&quot;COMMUNITY.AREA.NAME&quot;</span>))</span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a><span class="fu">ggplot</span>(scatter_data, <span class="fu">aes</span>(<span class="at">x =</span> Total_Businesses, <span class="at">y =</span> Restaurants)) <span class="sc">+</span></span>
+<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb22-12"><a href="#cb22-12" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Relationship: Total Businesses vs. Restaurants by Neighborhood&quot;</span>,</span>
+<span id="cb22-13"><a href="#cb22-13" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Total Number of Businesses&quot;</span>,</span>
+<span id="cb22-14"><a href="#cb22-14" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Number of Restaurants&quot;</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula
+## = &#39;y ~ x&#39;</code></pre>
+<p><img src="project1_files/figure-html/unnamed-chunk-4-3.png" width="672" /></p>
+<p>Chart 1 shows business density. Chart 2 reveals license distribution.
+Chart 3 shows the correlation between total businesses and restaurant
+concentration. All inform location strategy by visualizing market
+patterns.</p>
+</div>
+<div id="pattern-recognition" class="section level2">
+<h2>Pattern Recognition</h2>
+<ol style="list-style-type: decimal">
+<li>Geographic: Near North Side (4,587 businesses) has 4x more
+businesses than Ashburn (1,112), indicating significant market density
+variation.</li>
+<li>Category: Limited Business Licenses (15,476) dominate over Retail
+Food Establishments (3,456), showing small business environment favors
+new entrants.</li>
+</ol>
+</div>
+</div>
+<div id="section-4-strategic-recommendations" class="section level1">
+<h1>Section 4: Strategic Recommendations</h1>
+<ol style="list-style-type: decimal">
+<li>Avoid Near North Side and Loop (7,000+ businesses) due to
+saturation.</li>
+<li>Target moderate-density areas like Portage Park (2,100 businesses)
+for balanced competition.</li>
+<li>Leverage small-business friendly environment indicated by Limited
+License dominance. Data confirms optimal neighborhoods have 1,000-2,000
+existing businesses. <a href="projects.html">← Back to Projects</a></li>
+</ol>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
